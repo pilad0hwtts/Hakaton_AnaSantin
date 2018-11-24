@@ -26,7 +26,8 @@ class MainThread():
         self.countStressMeasures = 0
         self.fileName = "log.txt"
         self.message = self.advicer.getMessage()
-        #open(self.fileName, "r")
+        f=open(self.fileName, "w")
+        f.close()
 
     def operation(self):
         #Получает текущие значения пульса и физической активности
@@ -109,6 +110,6 @@ class MainThread():
             return False
     
     def saveData(self):
-       # file = open(self.fileName, "r")
-       # file.write("Время:{}|Состояние{}".format(datatime.datatime.now().time(), self.result))
-       pass
+       file = open(self.fileName, "a")
+       file.write("Время:{} | Состояние:{}\n".format(datetime.now().time(), self.result))
+      

@@ -98,7 +98,7 @@ class MainThread():
             return False
 
     def addToRangeHealthRate(self, value):
-        if (self.maxHR + value < 200) and (self.minHR + value > 0):
+        if (self.maxHR + value < 250) and (self.minHR + value > 0):
             self.minHR = self.minHR + value
             self.maxHR = self.maxHR + value
             return True

@@ -54,8 +54,7 @@ class MainThread():
                 if (self.countStressMeasures > self.countMeausures):
                     self.result = "Стресс"
             else:
-                if (self.countStressMeasures < self.countMeausures):
-                    self.countStressMeasures = 0
+                self.countStressMeasures = 0
                 if not(normalHeartRate) and not(normalAmplitude):
                     self.result = "Физическая активность"
                 if normalHeartRate and normalAmplitude:

@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import random
+from Talker import Talker
 from datetime import datetime
 
 class MainThread():
 
     def __init__(self):
+        self.advicer = Talker()
         self.A = 0 #amplitude
         self.HR = 0 #heart rate
         self.minHR = 70
@@ -23,6 +25,7 @@ class MainThread():
         self.isNotNormalHR = 90
         self.countStressMeasures = 0
         self.fileName = "log.txt"
+        self.message = self.advicer.getMessage()
         #open(self.fileName, "r")
 
     def operation(self):
@@ -34,7 +37,6 @@ class MainThread():
         if (len(self.lastAmplitude) == self.countMeausures):
             self.lastAmplitude.pop(self.countMeausures - 1)
         self.lastAmplitude.insert(0, self.A)
-
         if (len(self.lastHeartRate) == self.countMeausures):
             self.lastHeartRate.pop(self.countMeausures - 1)
         self.lastHeartRate.insert(0, self.HR)
@@ -53,8 +55,11 @@ class MainThread():
                 self.result = "Подозрение на стресс"
                 if (self.countStressMeasures > self.countMeausures):
                     self.result = "Стресс"
+                    self.advicer.newStressSituation()
             else:
                 self.countStressMeasures = 0
+                self.OK = True
+                self.advicer.newDefaultSituation()
                 if not(normalHeartRate) and not(normalAmplitude):
                     self.result = "Физическая активность"
                 if normalHeartRate and normalAmplitude:
@@ -62,6 +67,7 @@ class MainThread():
                 if normalHeartRate and not(normalAmplitude):
                     self.result = "Слабая физическая\nактивность"
             self.saveData()
+            self.message = self.advicer.getMessage()
         self.stressLevel = (self.HR - self.averageHR) * 100 / (self.averageHR * (self.A + 1))
 
     def getAmplitude(self): 
@@ -76,6 +82,11 @@ class MainThread():
 
     def setActive(self, value):
         self.active = value
+    
+    def response(self, value):
+        if (value):
+            
+        else:
     
     def addToRangeAmplitude(self, value):
         #if (self.chanseChangeA + value <= 100) and (self.chanseChangeA + value >= 0): 

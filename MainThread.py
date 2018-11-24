@@ -54,13 +54,13 @@ class MainThread():
             if normalHeartRate and not(normalAmplitude):
                 self.result = "Слабая физическая активность"
             self.saveData()
-        self.stressLevel = (self.HR - self.averageHR) * 100 / (self.averageHR * self.A)
+        self.stressLevel = (self.HR - self.averageHR) * 100 / (self.averageHR * (self.A + 1))
 
     def getAmplitude(self): 
-        amplityde = random.randint(0, self.minA)
-        if (random.randint(0, 100) < self.chanseChangeA):
-            amplityde = random.randint(self.minA, self.maxA)
-        return amplityde
+        #amplityde = random.randint(0, self.minA)
+        #if (random.randint(0, 100) < self.chanseChangeA):
+        #    amplityde = random.randint(self.minA, self.maxA)
+        return self.A
 
     def getHeartRate(self):
         heartRate = random.randint(self.minHR, self.maxHR)
@@ -70,10 +70,15 @@ class MainThread():
         self.active = value
     
     def addToRangeAmplitude(self, value):
-        if (self.chanseChangeA + value <= 100) and (self.chanseChangeA + value >= 0): 
-            self.chanseChangeA = self.chanseChangeA + value
+        #if (self.chanseChangeA + value <= 100) and (self.chanseChangeA + value >= 0): 
+        #    self.chanseChangeA = self.chanseChangeA + value
+        #    return True
+        #else: 
+        #    return False
+        if (self.A + value <= self.maxA) and (self.A + value >= 0):
+            self.A = self.A + value
             return True
-        else: 
+        else:
             return False
 
     def addToRangeHealthRate(self, value):

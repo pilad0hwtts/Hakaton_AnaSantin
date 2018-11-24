@@ -60,7 +60,7 @@ class Controller(Ui_MainWindow):
         self.MainThread.addToRangeHealthRate(-5)
 
     def AmpPlus(self):
-        self.MainThread.addToRangeAmplitude(10)
+        self.MainThread.addToRangeAmplitude(1)
 
     def AmpMinus(self):
-        self.MainThread.addToRangeAmplitude(10)
+        self.MainThread.addToRangeAmplitude(-1)

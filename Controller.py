@@ -2,6 +2,7 @@ from PyQt5.QtCore import QTimer
 from MainThread import MainThread
 from mainwindow import Ui_MainWindow
 from time import sleep
+from Talker import Talker
 
 
 class Controller(Ui_MainWindow):
@@ -9,6 +10,7 @@ class Controller(Ui_MainWindow):
         self.setupUi(window)
         self.tmr=QTimer()
         self.MainThread=MainThread()
+        self.Talker=Talker()
         self.startBtn.clicked.connect(self.startEmu)
         self.stopBtn.clicked.connect(self.stopEmu)
         self.tmr.timeout.connect(self.timeTick)
@@ -31,6 +33,7 @@ class Controller(Ui_MainWindow):
         active=self.MainThread.A
         self.PulsPB.setValue(self.MainThread.HR)
         self.AmpPB.setValue(active)
+
         activeValue=None
         if(active<1):
             activeValue="Покой"

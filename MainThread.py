@@ -43,7 +43,7 @@ class MainThread():
             for i in range(self.countMeausures):   
                 if (self.lastHeartRate[i] < self.isNotNormalHR):
                     normalHeartRate = True
-                if (self.lastAmplitude[i] < self.minA):
+                if (self.lastAmplitude[i] <= self.minA):
                     normalAmplitude = True
             if not(normalHeartRate) and normalAmplitude:
                 self.result = "Подозрение на стресс"

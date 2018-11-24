@@ -1,3 +1,6 @@
+
+# -*- coding: utf-8 -*-
+
 import random
 from datetime import datetime
 
@@ -18,7 +21,7 @@ class MainThread():
         self.result = ""
         self.stressLevel = 0
         self.isNotNormalHR = 90
-        self.isOK = True
+        self.countStressMeasures = 0
         self.fileName = "log.txt"
         #open(self.fileName, "r")
 
@@ -36,7 +39,7 @@ class MainThread():
             self.lastHeartRate.pop(self.countMeausures - 1)
         self.lastHeartRate.insert(0, self.HR)
         #Если уже набрано минимальное необходимое количество выборок - проводит анализ
-        self.result = "Создание выборки. Осталось еще {} данных для проведения анализа".format(self.countMeausures - len(self.lastAmplitude))
+        self.result = "Калибровка: {}".format(self.countMeausures - len(self.lastAmplitude))       
         if (len(self.lastAmplitude) == self.countMeausures and len(self.lastHeartRate) == self.countMeausures):
             normalHeartRate = False
             normalAmplitude = False
@@ -46,13 +49,19 @@ class MainThread():
                 if (self.lastAmplitude[i] <= self.minA):
                     normalAmplitude = True
             if not(normalHeartRate) and normalAmplitude:
+                self.countStressMeasures = self.countStressMeasures + 1
                 self.result = "Подозрение на стресс"
-            if not(normalHeartRate) and not(normalAmplitude):
-                self.result = "Физическая активность"
-            if normalHeartRate and normalAmplitude:
-                self.result = "Состояние покоя"
-            if normalHeartRate and not(normalAmplitude):
-                self.result = "Слабая физическая активность"
+                if (self.countStressMeasures > self.countMeausures):
+                    self.result = "Стресс"
+            else:
+                if (self.countStressMeasures < self.countMeausures):
+                    self.countStressMeasures = 0
+                if not(normalHeartRate) and not(normalAmplitude):
+                    self.result = "Физическая активность"
+                if normalHeartRate and normalAmplitude:
+                    self.result = "Состояние покоя"
+                if normalHeartRate and not(normalAmplitude):
+                    self.result = "Слабая физическая\nактивность"
             self.saveData()
         self.stressLevel = (self.HR - self.averageHR) * 100 / (self.averageHR * (self.A + 1))
 
@@ -93,4 +102,3 @@ class MainThread():
        # file = open(self.fileName, "r")
        # file.write("Время:{}|Состояние{}".format(datatime.datatime.now().time(), self.result))
        pass
-        

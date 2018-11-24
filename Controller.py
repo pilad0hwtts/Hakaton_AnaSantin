@@ -43,7 +43,7 @@ class Controller(Ui_MainWindow):
 
         self.stressLevelPB.setValue(self.MainThread.stressLevel)
         self.AmpPB.setFormat(activeValue)
-        self.MsgEdit.setText(self.MainThread.result)
+        self.StateMsg.setText(self.MainThread.result)
 
 
     def setAmplitude(self, amplitude):
